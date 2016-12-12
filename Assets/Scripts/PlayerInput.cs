@@ -4,8 +4,8 @@ using System.Collections;
 public class PlayerInput : MonoBehaviour {
 
     [SerializeField] float speed;
-    GameObject shoveableObject;
-    bool canShove = false;
+    GameObject interactableObject;
+    bool canInteract = false;
 
 	// Use this for initialization
 	void Start () {
@@ -31,13 +31,14 @@ public class PlayerInput : MonoBehaviour {
             transform.Translate(Vector3.back * speed * Time.deltaTime);
         }
 
-        if (Input.GetKey(KeyCode.Space) && canShove) {
-            shoveableObject.GetComponent<ShoveTrigger>().ShoveObject();
+        if (Input.GetKey(KeyCode.Space) && canInteract) {
+            // Debug.Log("Interacting");
+            interactableObject.GetComponent<InteractTrigger>().InteractWithObject();
         }
 	}
 
-    public void SetCanShove(bool state, GameObject newShoveableObject) {
-        canShove = state;
-        shoveableObject = newShoveableObject;
+    public void SetCanInteract(bool state, GameObject newInteractableObject) {
+        canInteract = state;
+        interactableObject = newInteractableObject;
     }
 }

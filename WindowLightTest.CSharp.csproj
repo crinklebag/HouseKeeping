@@ -68,10 +68,13 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\Cup.cs" />
+    <Compile Include="Assets\Scripts\Curtain.cs" />
+    <Compile Include="Assets\Scripts\InteractTrigger.cs" />
+    <Compile Include="Assets\Scripts\MoveCamera.cs" />
     <Compile Include="Assets\Scripts\MoveableObject.cs" />
     <Compile Include="Assets\Scripts\PlayerInput.cs" />
     <Compile Include="Assets\Scripts\Puzzle.cs" />
-    <Compile Include="Assets\Scripts\ShoveTrigger.cs" />
     <Compile Include="Assets\Scripts\SuccessTrigger.cs" />
     <Compile Include="Assets\Scripts\VolumetricLight.cs" />
     <Compile Include="Assets\Scripts\VolumetricLightRenderer.cs" />
