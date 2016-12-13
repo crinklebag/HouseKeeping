@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class Puzzle : MonoBehaviour {
 
@@ -12,6 +13,11 @@ public class Puzzle : MonoBehaviour {
     [SerializeField] GameObject lockedDoor2;
     [SerializeField] GameObject cat;
     [SerializeField] GameObject sleepingCat;
+    GameObject instructionsText;
+
+    void Start() {
+        instructionsText = GameObject.FindGameObjectWithTag("Trigger Text");
+    }
 
     public void CheckWin() {
         switch (currentPuzzle) {
@@ -21,8 +27,9 @@ public class Puzzle : MonoBehaviour {
             case PuzzleState.PUZZLE2:
                 // If the plant has been watered and sunned, make it brighter
                 if (puzzle2Objects[0].GetComponent<MoveableObject>().Successful() && puzzle2Objects[1].GetComponent<MoveableObject>().Successful()) {
-                    Debug.Log("Nourishing Plant");
+                    // Debug.Log("Nourishing Plant");
                     puzzle2Objects[0].GetComponent<MoveableObject>().NourishPlant();
+                    instructionsText.transform.GetChild(0).GetComponent<Text>().text = "So nourished!";
                 }
                 CheckObjects(puzzle2Objects);
                 break;

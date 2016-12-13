@@ -7,7 +7,7 @@ public class SuccessTrigger : MonoBehaviour {
 
     void OnTriggerEnter(Collider other) {
         if (other.CompareTag(triggerObject)) {
-            Debug.Log("Hit Success Trigger");
+            // Debug.Log("Hit Success Trigger");
             other.GetComponent<MoveableObject>().Success();
         }
     }

@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class InteractTrigger : MonoBehaviour {
 
     [SerializeField] GameObject interactableObject;
+    [SerializeField] GameObject objectOutline;
     [SerializeField] string instructions;
     [SerializeField] Vector3 forceDirection;
     [SerializeField] float forcePower;
@@ -24,7 +25,8 @@ public class InteractTrigger : MonoBehaviour {
 	}
 
     void OnTriggerEnter(Collider other) {
-        if (other.CompareTag("Player")) {
+        if (other.CompareTag("Player") && interactableObject.activeSelf == true && !interactableObject.GetComponent<MoveableObject>().Successful()) {
+            objectOutline.SetActive(true);
             instructionsText.transform.GetChild(0).gameObject.SetActive(true);
             instructionsText.transform.GetChild(0).GetComponent<Text>().text = instructions;
             player.SetCanInteract(true, this.gameObject);
@@ -35,6 +37,7 @@ public class InteractTrigger : MonoBehaviour {
         if (other.CompareTag("Player")) {
             instructionsText.transform.GetChild(0).gameObject.SetActive(false);
             player.SetCanInteract(false, null);
+            objectOutline.SetActive(false);
         } if (other.CompareTag("Cactus")) {
             other.GetComponent<MoveableObject>().ShadePlant();
         }

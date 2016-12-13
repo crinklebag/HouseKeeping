@@ -10,9 +10,9 @@ public class MoveableObject : MonoBehaviour {
 
     [Header("Object Refences")]
     [SerializeField] Material successMat;
-    [SerializeField] GameObject tippedGlass;
-    [SerializeField] GameObject plantStem;
-    [SerializeField] GameObject plantFlower;
+    [SerializeField] GameObject changeableMesh;
+    [SerializeField] GameObject changeableMesh2;
+    [SerializeField] GameObject successObject;
     [SerializeField] bool goalCurtainState; // False to close and true to open
     [SerializeField] bool sunned;
     [SerializeField] Vector3 openCurtain;
@@ -59,7 +59,7 @@ public class MoveableObject : MonoBehaviour {
 
     public void TipGlass() {
         successful = true;
-        tippedGlass.SetActive(true);
+        successObject.SetActive(true);
         tipped = true;
         this.gameObject.SetActive(false);
         puzzle.CheckWin();
@@ -83,8 +83,14 @@ public class MoveableObject : MonoBehaviour {
     }
 
     public void NourishPlant() {
-        plantStem.GetComponent<MeshRenderer>().material = successMat;
-        plantFlower.SetActive(true);
+        changeableMesh.GetComponent<MeshRenderer>().material = successMat;
+        successObject.SetActive(true);
+        changeableMesh2.GetComponent<MoveableObject>().SetCanMove(true);
+        MeshRenderer[] children = changeableMesh2.transform.GetComponentsInChildren<MeshRenderer>();
+        foreach (MeshRenderer mesh in children) {
+            mesh.material = successMat;
+        }
+        // changeableMesh2.GetComponent<MoveableObject>().RightSpot();
     }
 
     #endregion
@@ -131,6 +137,11 @@ public class MoveableObject : MonoBehaviour {
 
     public bool GetCanMove() {
         return canMove;
+    }
+
+    public void SetCanMove(bool state) {
+            canMove = state;
+            successful = state;
     }
     #endregion
 }

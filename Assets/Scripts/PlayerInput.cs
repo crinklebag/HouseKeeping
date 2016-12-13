@@ -14,28 +14,43 @@ public class PlayerInput : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        if (Input.GetKey(KeyCode.A)) {
+        HandleInput();
+        // Vector3 oldRot = transform.rotation.eulerAngles;
+        // transform.rotation = Quaternion.Euler(0, oldRot.y, 0);
+    }
+
+    void HandleInput()
+    {
+        if (Input.GetKey(KeyCode.A))
+        {
             // move left
             transform.Translate(Vector3.left * speed * Time.deltaTime);
+            // transform.Rotate(this.transform.up, -1);
         }
-        if (Input.GetKey(KeyCode.D)) {
+        if (Input.GetKey(KeyCode.D))
+        {
             // move right
             transform.Translate(Vector3.right * speed * Time.deltaTime);
+            //transform.Rotate(this.transform.up, 1);
         }
-        if (Input.GetKey(KeyCode.W)) {
+        if (Input.GetKey(KeyCode.W))
+        {
             // move forward
             transform.Translate(Vector3.forward * speed * Time.deltaTime);
         }
-        if (Input.GetKey(KeyCode.S)) {
+        if (Input.GetKey(KeyCode.S))
+        {
             // move back
             transform.Translate(Vector3.back * speed * Time.deltaTime);
         }
 
-        if (Input.GetKey(KeyCode.Space) && canInteract) {
+        if (Input.GetKey(KeyCode.Space))
+        {
             // Debug.Log("Interacting");
-            interactableObject.GetComponent<InteractTrigger>().InteractWithObject();
+            if (canInteract) { interactableObject.GetComponent<InteractTrigger>().InteractWithObject(); }
+            else { } // Jump
         }
-	}
+    }
 
     public void SetCanInteract(bool state, GameObject newInteractableObject) {
         canInteract = state;
