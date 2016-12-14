@@ -7,12 +7,14 @@ public class Puzzle : MonoBehaviour {
     public enum PuzzleState { PUZZLE1, PUZZLE2, SOLVED };
     PuzzleState currentPuzzle = PuzzleState.PUZZLE1;
 
+    [SerializeField] Light[] puzzleLights;
     [SerializeField] GameObject[] puzzle1Objects;
     [SerializeField] GameObject[] puzzle2Objects;
     [SerializeField] GameObject lockedDoor1;
     [SerializeField] GameObject lockedDoor2;
     [SerializeField] GameObject cat;
     [SerializeField] GameObject sleepingCat;
+    [SerializeField] GameObject winText;
     GameObject instructionsText;
 
     void Start() {
@@ -23,13 +25,24 @@ public class Puzzle : MonoBehaviour {
         switch (currentPuzzle) {
             case PuzzleState.PUZZLE1:
                 CheckObjects(puzzle1Objects);
+                if (puzzle1Objects[0].GetComponent<MoveableObject>().Successful()) {
+                    puzzleLights[0].intensity = 8;
+                }
+                if (puzzle1Objects[1].GetComponent<MoveableObject>().Successful()) {
+                    puzzleLights[1].intensity = 8;
+                }
                 break;
             case PuzzleState.PUZZLE2:
                 // If the plant has been watered and sunned, make it brighter
                 if (puzzle2Objects[0].GetComponent<MoveableObject>().Successful() && puzzle2Objects[1].GetComponent<MoveableObject>().Successful()) {
                     // Debug.Log("Nourishing Plant");
                     puzzle2Objects[0].GetComponent<MoveableObject>().NourishPlant();
-                    instructionsText.transform.GetChild(0).GetComponent<Text>().text = "So nourished!";
+                    instructionsText.transform.GetChild(0).GetComponent<Text>().text = "Ah Ha!";
+                    puzzleLights[2].intensity = 8;
+                } if (puzzle2Objects[2].GetComponent<MoveableObject>().Successful() && puzzle2Objects[3].GetComponent<MoveableObject>().Successful()) {
+                    puzzle2Objects[4].GetComponent<MoveableObject>().FixTank();
+                    puzzleLights[3].intensity = 8;
+                    // Win Game this level -- load final puzzle
                 }
                 CheckObjects(puzzle2Objects);
                 break;
@@ -62,7 +75,8 @@ public class Puzzle : MonoBehaviour {
                 currentPuzzle = PuzzleState.PUZZLE2;
                 break;
             case PuzzleState.PUZZLE2:
-                lockedDoor2.SetActive(false);
+                // lockedDoor2.SetActive(false);
+                winText.SetActive(true);
                 break;
         }
     }

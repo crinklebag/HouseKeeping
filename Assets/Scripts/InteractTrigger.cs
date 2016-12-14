@@ -44,14 +44,14 @@ public class InteractTrigger : MonoBehaviour {
     }
 
     public void InteractWithObject() {
-        // Debug.Log("Object Type: " + interactableObject.GetComponent<MoveableObject>().GetObjectType());
+        Debug.Log("Object Type: " + interactableObject.GetComponent<MoveableObject>().GetObjectType());
         switch (interactableObject.GetComponent<MoveableObject>().GetObjectType()) {
             case 0: // Cup
                 interactableObject.GetComponent<MoveableObject>().TipGlass();
                 break;
-            case 1: // Tank
-                break;
             case 2: // Curtain
+                Debug.Log("Interact with Curtain");
+                interactableObject.GetComponent<MoveableObject>().HandleCurtains();
                 break;
             case 3: // Dresser
                 interactableObject.GetComponent<MoveableObject>().MoveDresser(forceDirection, forcePower);

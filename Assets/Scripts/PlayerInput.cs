@@ -44,7 +44,7 @@ public class PlayerInput : MonoBehaviour {
             transform.Translate(Vector3.back * speed * Time.deltaTime);
         }
 
-        if (Input.GetKey(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             // Debug.Log("Interacting");
             if (canInteract) { interactableObject.GetComponent<InteractTrigger>().InteractWithObject(); }

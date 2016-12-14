@@ -26,16 +26,13 @@ public class MoveableObject : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         puzzle = GameObject.FindGameObjectWithTag("GameController").GetComponent<Puzzle>();
-        if (!goalCurtainState) {
+        if (goalCurtainState) {
+            // closed = false;
             CloseCurtains();
         } else {
+            // closed = true;
             OpenCurtains();
         }
-	}
-	
-	// Update is called once per frame
-	void Update () {
-        HandleCurtains();
 	}
 
     public int GetObjectType() { 
@@ -65,8 +62,9 @@ public class MoveableObject : MonoBehaviour {
         puzzle.CheckWin();
     }
 
-    void FixTankTemp() {
-
+    public void FixTank() {
+        changeableMesh.GetComponent<MeshRenderer>().material = successMat;
+        successful = true;
     }
 
     #region PLANT 
@@ -96,24 +94,42 @@ public class MoveableObject : MonoBehaviour {
     #endregion
 
     #region CURTAINS
-    public void OpenCurtains() {
+    void OpenCurtains() {
         if (type == ObjectType.CURTAIN && closed) {
             Debug.Log("Opening Curtains");
             closed = false;
             this.transform.localScale = openCurtain;
         }
+
+        if (goalCurtainState) {
+            successful = true;
+        }
+        else { successful = false; }
+
+        puzzle.CheckWin();
     }
 
-    public void CloseCurtains() {
+    void CloseCurtains() {
         if (type == ObjectType.CURTAIN && !closed){
             Debug.Log("Closing Curtains");
             closed = true;
             this.transform.localScale = closeCurtain;
         }
+
+        if (!goalCurtainState) {
+            successful = true;
+        }
+        else { successful = false; }
+
+        puzzle.CheckWin();
     }
 
-    void HandleCurtains() {
-
+    public void HandleCurtains() {
+        if (closed) {
+            OpenCurtains();
+        } else {
+            CloseCurtains();
+        }
     }
     #endregion
 
